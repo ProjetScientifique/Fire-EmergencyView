@@ -60,20 +60,21 @@
                                 foreach ($json_incidents as $incident) {
                                     
                                     //address : translate by API.
-                                    try {
-                                        $address = $API->getAddressFromCoords($incident['latitude_incident'],$incident['longitude_incident']);
-                                        $addressJson=json_decode($address,TRUE);
-                                        $address = $addressJson['address'];
+                                    /*try {
+                                        #$address = $API->getAddressFromCoords($incident['latitude_incident'],$incident['longitude_incident']);
+                                        #$addressJson=json_decode($address,TRUE);
+                                        #$address = $addressJson['address'];
                                         // sous la forme de : Lyon - Rue Garibaldi, Part-Dieu
-                                        $AffichageRue = $address["city"].' - '.$address["road"].', '.$address["suburb"];
-                                        if ($AffichageRue == " - , "){
-                                            $AffichageRue = strval($incident['latitude_incident'])." ".strval($incident['longitude_incident']);
-                                        }
-
+                                        #$AffichageRue = $address["city"].' - '.$address["road"].', '.$address["suburb"];
+                                        #if ($AffichageRue == " - , "){
+                                        #    $AffichageRue = strval($incident['latitude_incident'])." ".strval($incident['longitude_incident']);
+                                        #}
+                                        
                                     } catch (Exception $e) {
                                         print_r($e);//cas erreur (afficher = DEBUG)
-                                        $AffichageRue = strval($incident['latitude_incident'])." ".strval($incident['longitude_incident']);
-                                    }
+                                        #$AffichageRue = $incident['latitude_incident'].", ".$incident['longitude_incident'];
+                                    }*/
+                                    $AffichageRue = $incident['latitude_incident'].", ".$incident['longitude_incident'];
                                     ?>
                                     
                                     <tr class='<?php echo(str_replace(" ","_",$incident['type_status_incident']['nom_type_status_incident'])); ?>'>
@@ -100,14 +101,14 @@
                         <img class="iconParams" src="img/Incendie-3.png" alt="Incendies" />
                         <label class="switch">
                             <span class="slider round"> - Incendies</span>
-                            <input type="checkbox" value="test">
+                            <input type="checkbox" checked>
                         </label>
                     </div>
                     <div class="btn-afficher capteurs">
                         <img class="iconParams" src="img/detecteur.png" alt="Capteurs" />
                         <label class="switch">
                             <span class="slider round"> - Capteurs</span>
-                            <input type="checkbox">
+                            <input type="checkbox" checked>
 
                         </label>
                     </div>
@@ -115,7 +116,7 @@
                         <img class="iconParams" src="img/caserne.png" alt="Casernes" />
                         <label class="switch">
                             <span class="slider round"> - Casernes</span>
-                            <input type="checkbox">
+                            <input type="checkbox" checked>
 
                         </label>
                     </div>
@@ -123,7 +124,7 @@
                         <img class="iconParams" src="img/camion.png" alt="Camions" />
                         <label class="switch">
                             <span class="slider round"> - Camions</span>
-                            <input type="checkbox">
+                            <input type="checkbox" checked>
 
                         </label>
                     </div>
@@ -161,6 +162,7 @@
             var markers_caserne = [] // 2 
             var markers_vehicule = [] // 3
             var markers_all = [markers_incident,markers_detecteur,markers_caserne,markers_vehicule]
+            
             /* ––––––––––––DEFINE IMAGES––––––––––––*/
             function iconNiveau(type,niveau) {
                 return L.icon({
@@ -238,7 +240,7 @@
                         var intensite = <?php echo($incident['intensite_incident']); ?> //1 à 100
                         var type_incident = '<?php echo($incident['type_incident']['nom_type_incident']); ?>' // prit en charge (incendie)
                         var status = '<?php echo($incident['type_status_incident']['nom_type_status_incident']); ?>'
-                        var intensite_1_a_3 = Math.round(parseInt(intensite)/100*2)+1
+                        var intensite_1_a_3 = Math.round(parseInt(intensite)/10*2)+1
                         
                         //Ajout du marker: avec une image (type_incident, et une intensité de 1 à 3.
                         var marker = L.marker([latitude, longitude],{icon:iconNiveau(type_incident,intensite_1_a_3)}).addTo(map);
@@ -248,7 +250,7 @@
                         <a href="https://www.google.fr/maps/@${latitude},${longitude},15z">
                         <h4 class="adresse">${adresse}</h4>
                         </a></br>
-                        <b>Coordonnées</b> : ${latitude}, ${longitude}</br></br>
+                        <b>Coordonnées</b> : lat:${latitude}, long:${longitude}</br></br>
                         <h4 class="status incident">
                             Incident ${status}
                         </h4>`)
@@ -350,7 +352,38 @@
                             $vehicule_type_dispo_array[str_replace(" ","_",$vehicule["type_vehicule"]["nom_type_vehicule"])]++;
                         }else {
                             $vehicule_type_occupe_array[str_replace(" ","_",$vehicule["type_vehicule"]["nom_type_vehicule"])]++;
+                            //alors on affiche le camion.
+                            ?>
+                            var latitude =  <?php echo($vehicule['latitude_vehicule']); ?> //lat
+                            var longitude = <?php echo($vehicule['longitude_vehicule']); ?> //long 
+                            //nom caserne
+                            var nom_type_vehicule = '<?php echo($vehicule['type_vehicule']['nom_type_vehicule']);?>' //nom
+                            var capacite_type_vehicule = '<?php echo($vehicule['type_vehicule']['capacite_type_vehicule']);?>' //capacite
+                            var puissance_intervention_type_vehicule = '<?php echo($vehicule['type_vehicule']['puissance_intervention_type_vehicule']);?>' //puissance
+                            var nom_caserne = '<?php echo($vehicule['caserne']['nom_caserne']);?>' //nom caserne
+                            var annee_vehicule = '<?php echo($vehicule['annee_vehicule']);?>' //annee 
+                            var nombre_intervention_maximum_vehicule = '<?php echo($vehicule['nombre_intervention_maximum_vehicule']);?>'
+                            //nom de Rue
 
+                            var marker = L.marker([latitude, longitude],{icon:iconCamionPompier}).addTo(map);
+                            marker.bindPopup(`
+                            <h1 class="title">Camion de Pompier</h1>
+                            <h2 class="NomVehicule">${nom_type_vehicule}</h2>
+                            <h2 class="NomCaserne">Caserne ${nom_caserne}</h2></br>
+                            <b>Coordonnées</b> :
+                            <a href="https://www.google.fr/maps/@${latitude},${longitude},15z">
+                                <h4 class="adresse">${latitude},${longitude}</h4>
+                            </a></br>
+                            <h4>Caractéristiques</h4>
+                            <div>
+                                <span>Capacités : <b>${capacite_type_vehicule}</b></span></br>
+                                <span>Puissance du Véhicule : <b>${puissance_intervention_type_vehicule}</b></span></br>
+                                <span>Nombre d'intervention maximum : <b>${nombre_intervention_maximum_vehicule}</b></span></br>
+                                <span>Année construction : <b>${annee_vehicule}</b></span></br>
+
+                            </div>
+                            `)
+                            <?php
                         }
 
 

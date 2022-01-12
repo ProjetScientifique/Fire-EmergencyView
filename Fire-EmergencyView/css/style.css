@@ -61,6 +61,18 @@ tbody>tr{
 }
 
 
+.Pris_en_charge{
+    background-color: lightblue;
+}
+.Until_located{
+    background-color: lightpink;
+}
+
+
+.Pris_en_charge{
+    background-color: lightblue;
+}
+
 .disponnibilite_vehicule{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
