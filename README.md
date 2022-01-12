@@ -12,16 +12,16 @@ Utilisation de la librairie JS leafletjs.com
 
 # TODO 
 - [x] Reprendre le code du Web Simulateur.
-- [ ] Mettre en place les incidents et les Casernes sur la carte.
-- [ ] Fonctionnalité: afficher les camions (et leurs trajectoires)
-- [ ] Fonctionnalité: Cliquer sur une caserne surligne, les camions de la caserne et affiche une popup le nombre de pompier total, en intervention, liste des véhicules (en intervention et libre).
+- [x] Mettre en place les incidents et les Casernes sur la carte.
+- [x] Fonctionnalité: afficher les camions (et leurs trajectoires)
+- [x] Fonctionnalité: Cliquer sur une caserne surligne, les camions de la caserne et affiche une popup le nombre de pompier total, en intervention, liste des véhicules (en intervention et libre).
 
-- [ ] Fichier htaccess réécriture d'URL
+- [x] Fichier htaccess réécriture d'URL (pas besoin lol)
 
 ## liste a gauche:
-- [ ] table Liste Event scrollable.
-- [ ] liste des incidents, changer les couleurs lorsque pris en charge, et terminé
-- [ ] différentes pages (carrousel) :
+- [ ] table Liste Event scrollable. (flemme)
+- [x] liste des incidents, changer les couleurs lorsque pris en charge, et terminé
+- [ ] différentes pages (carrousel) : (mega flemme)
   - - [ ] Selections des Casernes
   - - [ ] Selection des Camions
   - - [ ] Recherche de: Véhicule ? (pk pas ?)

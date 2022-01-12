@@ -58,7 +58,6 @@
                         <tbody>
                             <?php 
                                 foreach ($json_incidents as $incident) {
-                                    
                                     //address : translate by API.
                                     /*try {
                                         #$address = $API->getAddressFromCoords($incident['latitude_incident'],$incident['longitude_incident']);
