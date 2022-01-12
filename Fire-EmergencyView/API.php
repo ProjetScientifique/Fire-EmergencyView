@@ -2,7 +2,7 @@
 
 class API {
     function __construct(){
-        $this->_BASE_URL_API = 'http://192.168.5.136:8001';
+        $this->_BASE_URL_API = 'http://192.168.5.183:8001';
     }
 
     function getIncident(string $TOKEN, int $skip=0, int $limit=1000){

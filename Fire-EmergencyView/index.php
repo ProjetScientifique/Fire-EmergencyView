@@ -471,7 +471,12 @@
             }
 
         </script>
-   
+        <script type="text/javascript">
+            //a enlever.
+            setTimeout(function(){
+            window.location.reload(1);
+            }, 5000);
+        </script>
     </body>
     <footer>
 
