@@ -60,17 +60,17 @@ tbody>tr{
     text-align: center;
 }
 
-
 .Pris_en_charge{
     background-color: lightblue;
 }
 .Until_located{
     background-color: lightpink;
 }
-
-
-.Pris_en_charge{
-    background-color: lightblue;
+.Non_pris_en_charge{
+    background-color: lightgreen;
+}
+.Eteint{
+    background-color: lightgrey;
 }
 
 .disponnibilite_vehicule{

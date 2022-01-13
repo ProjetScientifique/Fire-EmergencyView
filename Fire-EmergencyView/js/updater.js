@@ -19,14 +19,18 @@ function updateall(map){
         latitude = incident['latitude_incident']
         longitude = incident['longitude_incident']
         intensite = incident['intensite_incident']
-        ligne = `
-        <tr class='${className}'>
-            <td>${nomRue}</td>
-            <td>${latitude}, ${longitude}</td>
-            <td class='intensite'>${intensite}</td>
-        </tr>
-        `
-        tbody.innerHTML = tbody.innerHTML + ligne
+        if (className == 'Pris_en_charge' || className == 'Non_pris_en_charge'){
+            ligne = `
+            <tr class='${className}'>
+                <td>${nomRue}</td>
+                <td>${latitude}, ${longitude}</td>
+                <td class='intensite'>${intensite}</td>
+            </tr>
+            `
+            tbody.innerHTML = tbody.innerHTML + ligne
+        }
+        
+        
     });
     
     /*A METTRE DANS UN FICHIER*/
@@ -72,21 +76,24 @@ function updateall(map){
         var type_incident = incident['type_incident']['nom_type_incident'] // prit en charge (incendie)
         var status = incident['type_status_incident']['nom_type_status_incident']
         var intensite_1_a_3 = Math.round(parseInt(intensite)/10*2)+1
-        
-        //Ajout du marker: avec une image (type_incident, et une intensité de 1 à 3.
-        var marker = L.marker([latitude, longitude],{icon:iconNiveau(type_incident,intensite_1_a_3)}).addTo(map);
-        marker.bindPopup(`
-                        <h1 class="title">${type_incident} de Niveau ${intensite}</h1>
-                        <h2 class="date_incident">${date_incident.toLocaleString('fr-FR', { timeZone: 'UTC' })}</h2>
-                        <a href="https://www.google.fr/maps/@${latitude},${longitude},15z">
-                        <b>Coordonnées</b> : lat:${latitude}, long:${longitude}
-                        </a></br>
-                        </br>
-                        <h4 class="status incident">
-                            Incident ${status}
-                        </h4>`)
-        
-        marker.options.name = "incident"
+        var className = incident['type_status_incident']['nom_type_status_incident'].replace(" ","_")
+
+        if (className == 'Pris_en_charge' || className == 'Non_pris_en_charge'){
+            //Ajout du marker: avec une image (type_incident, et une intensité de 1 à 3.
+            var marker = L.marker([latitude, longitude],{icon:iconNiveau(type_incident,intensite_1_a_3)}).addTo(map);
+            marker.bindPopup(`
+                            <h1 class="title">${type_incident} de Niveau ${intensite}</h1>
+                            <h2 class="date_incident">${date_incident.toLocaleString('fr-FR', { timeZone: 'UTC' })}</h2>
+                            <a href="https://www.google.fr/maps/@${latitude},${longitude},15z">
+                            <b>Coordonnées</b> : lat:${latitude}, long:${longitude}
+                            </a></br>
+                            </br>
+                            <h4 class="status incident">
+                                Incident ${status}
+                            </h4>`)
+            
+            marker.options.name = "incident"
+        }
 
     });
 
@@ -113,9 +120,10 @@ function updateall(map){
         pompierTotal = 0;
         pompier_grade_array = [];
         pompier_grade_dispo_array = [];
-        pompier_grade_occupe_array = [];   
+        pompier_grade_occuper_array = [];   
 
         pompierCaserne.forEach(pompier => {
+            console.log(pompier_grade_array[pompier["type_pompier"]["nom_type_pompier"].replace(' ','_')])
             if(pompier_grade_array[pompier["type_pompier"]["nom_type_pompier"].replace(' ','_')] !== undefined){
                 pompier_grade_array[pompier["type_pompier"]["nom_type_pompier"].replace(' ','_')]++
             }else{
@@ -128,15 +136,14 @@ function updateall(map){
             }else{
                 pompier_grade_occuper_array[pompier["type_pompier"]["nom_type_pompier"].replace(' ','_')]=0
             }
-
         })
 
         vehiculeLibre = 0;
         vehiculeOccupe = 0;
         vehiculeTotal = 0;
-        vehicule_type_array = [];
+        vehicule_grade_array = [];
         vehicule_type_dispo_array = []
-        vehicule_type_occupe_array = []
+        vehicule_type_occuper_array = []
 
 
 
@@ -147,13 +154,13 @@ function updateall(map){
                 vehicule_grade_array[vehicule["type_vehicule"]["nom_type_vehicule"].replace(' ','_')]++
             }else{
                 vehicule_grade_array[vehicule["type_vehicule"]["nom_type_vehicule"].replace(' ','_')]=1
-                vehicule_grade_dispo_array[vehicule["type_vehicule"]["nom_type_vehicule"].replace(' ','_')]=0
-                vehicule_grade_occuper_array[vehicule["type_vehicule"]["nom_type_vehicule"].replace(' ','_')]=0
+                vehicule_type_dispo_array[vehicule["type_vehicule"]["nom_type_vehicule"].replace(' ','_')]=0
+                vehicule_type_occuper_array[vehicule["type_vehicule"]["nom_type_vehicule"].replace(' ','_')]=0
             }
             if(vehicule["type_disponibilite_vehicule"]["nom_type_disponibilite_vehicule"] == "Disponible"){
-                vehicule_grade_dispo_array[vehicule["type_vehicule"]["nom_type_vehicule"].replace(' ','_')]++
+                vehicule_type_dispo_array[vehicule["type_vehicule"]["nom_type_vehicule"].replace(' ','_')]++
             }else{
-                vehicule_grade_occuper_array[vehicule["type_vehicule"]["nom_type_vehicule"].replace(' ','_')]=0
+                vehicule_type_occuper_array[vehicule["type_vehicule"]["nom_type_vehicule"].replace(' ','_')]=0
                 
                 //cas vehicule en intervention on l'affiche alors sur la carte.
 
@@ -196,12 +203,12 @@ function updateall(map){
         var nom = caserne['nom_caserne']
         var data_vehicule = ``
         
-        vehicule_type_array.forEach(type_vehicule => {
+        vehicule_grade_array.forEach(type_vehicule => {
 
             nom_vehicule = type_vehicule.replace("_"," ")
-            nombre_total = vehicule_type_array[type_vehicule]
+            nombre_total = vehicule_grade_array[type_vehicule]
             nombre_dispo = vehicule_type_dispo_array[type_vehicule]
-            nombre_indispo = vehicule_type_occupe_array[type_vehicule]
+            nombre_indispo = vehicule_type_occuper_array[type_vehicule]
 
 
             data_vehicule = data_vehicule + `

@@ -18,7 +18,7 @@ function afficherOuCacherLesMarker(map,marker_to_edit,etat_btn){
  * */
 
 
-var URL = 'http://localhost:8001'
+var URL = 'http://192.168.5.136:8001'
 var TOKEN = 'CB814D37E278A63D3666B1A1604AD0F5C5FD7E177267F62B8D719F49182F410A'
 skip = 0
 limit = 1000
