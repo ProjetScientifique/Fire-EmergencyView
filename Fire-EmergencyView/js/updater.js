@@ -310,8 +310,8 @@ function updateall(map){
     /*GET MARKER AUTOMATICLY IN JS BY API AT WEB SERVICE.  */
     incidents.forEach(incident => {
         var className = incident['type_status_incident']['nom_type_status_incident'].replace(" ","_")
+        var id = incident['id_incident']
         if (className == 'Pris_en_charge' || className == 'Non_pris_en_charge'){
-            var id = incident['id_incident']
             var latitude =  incident['latitude_incident'] //coord lat
             var longitude = incident['longitude_incident'] //coord long
             var date_incident = Date(incident['date_incident']) //date apparition
