@@ -348,7 +348,7 @@ function updateall(map){
                             console.log("layer is open, not updated yet.")
                         }else{
                             map.removeLayer(layer)
-                            delete markers_vehicule.id
+                            delete markers_incident.id
                         } 
                     }
                 });
