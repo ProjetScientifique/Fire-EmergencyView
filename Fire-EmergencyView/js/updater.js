@@ -337,18 +337,19 @@ function updateall(map){
                 markers_vehicule[id] = marker
                 marker.addTo(map)
             }else{
-                markers_incident[id].setPopupContent(content)
+                markers_incident[id].setPopupContent(content)//on met a jour le text
                 markers_incident[id].setLatLng([latitude, longitude])// A VERIFIER TODO
             }
         }else{
+            //on regarde pour supprimer les markers plus utilisé.
             if (markers_incident[id]!=undefined){
                 map.eachLayer(function (layer) { 
                     if (layer.options.name === `incident-${id}`) {
                         if(layer.isPopupOpen()){
-                            console.log("layer is open, not updated yet.")
+                            console.log("layer is open, not updated yet.")//tempo si open.
                         }else{
-                            map.removeLayer(layer)
-                            delete markers_incident.id
+                            map.removeLayer(layer)//on l'enlèbe de la carte.
+                            delete markers_incident.id //on supprime aussi l'élément de la liste.
                         } 
                     }
                 });
