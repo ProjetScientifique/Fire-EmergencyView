@@ -40,8 +40,8 @@
                 <div class="titre"><h1>Carte</h1></div>
                 <!-- –––––––––––– HTML DIV MAPBOX –––––––––––– -->
                 <div id="mapbox"></div>
-                <div id="params">
-                    <!-- –––––––––––– HTML MENU PARAMETRES –––––––––––– -->
+                <!--<div id="params">
+                    <!-- @–––––––––––– HTML MENU PARAMETRES –––––––––––– --><!--
                     <h4>Éléments à afficher :</h4>
                     <div class="btn-afficher incidents">
                         <img class="iconParams" src="img/Incendie-3.png" alt="Incendies" />
@@ -74,18 +74,11 @@
 
                         </label>
                     </div>
-                </div>
+                </div>-->
             </div>
             
         </div>
         <script type="text/javascript">
-            
-            
-            /*A METTRE DANS UN FICHIER*/
-
-            //RPZ Lyon 69 La Trick
-            //45.754154744767455, 4.864503340336376
-
             /* –––––––––––– Génére la map –––––––––––– */
             const mapbox_token = "pk.eyJ1IjoidGVsbGVibWEiLCJhIjoiY2tuaXdleTY3MHM2dzJucGdpbGxsOXA3aCJ9.Lv06-rCdI3y9m0nC_0bWsg";
             var map = L.map('mapbox').setView([45.75415, 4.8645033], 12.5);
@@ -124,7 +117,7 @@
             var iconCamionPompier = L.icon({
                 iconUrl: 'img/camion.png',
                 iconSize:     [35,35],//[35, 60], // size of the icon
-                iconAnchor:   [22, 49], // point of the icon which will correspond to marker's location
+                iconAnchor:   [10, 15], // point of the icon which will correspond to marker's location
                 popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
 
@@ -144,31 +137,38 @@
                 popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
 
-            /*GET MARKER AUTOMATICLY IN JS BY API AT WEB SERVICE.  */
-
-            updateall(map)
-            setTimeout(function(){
-            updateall(map)
-
-            }, 5000);
-
-
-        </script>
-        <script type="text/javascript">
             /**
              * ––––––––––––ADDEventListener Params menu––––––––––––
-             */
+             
              var switchs = document.getElementsByClassName("switch")
              var listElement = ['incident','detecteur','caserne','vehicule']
             for (let index = 0; index < switchs.length; index++) {
                 // get input.
                 element = switchs[index].getElementsByTagName("input")[0]
-                console.log(index)
                 //add listener
                 element.addEventListener('change',function(){
                     afficherOuCacherLesMarker(map,listElement[index])
                 })
+            }*/
+
+
+
+
+            /*GET MARKER AUTOMATICLY IN JS BY API AT WEB SERVICE.  */
+            initialisation(map)
+            updateall(map)
+            setInterval(updateall,5100,map)
+
+            /*while (true) {
+                setTimeout(function(){
+                    console.log("Coucou monde !");
+                }, 1000);
             }
+            /*do{
+                setTimeout(function(){
+                    updateall(map)
+                }, 10000);  
+            }while(true);*/
         </script>
     </body>
     <footer>

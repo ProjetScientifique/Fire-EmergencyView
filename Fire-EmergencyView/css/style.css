@@ -127,3 +127,31 @@ tbody>tr{
 .iconParams{
     width: 20px;
 }
+
+
+
+/*MARKER TRANSITIONS */
+.leaflet-marker-pane > * {
+    -webkit-transition: transform 5s linear;
+    -moz-transition: transform 5s linear;
+    -o-transition: transform 5s linear;
+    -ms-transition: transform 5s linear;
+    transition: transform 5s linear;
+  }
+
+
+
+
+
+  /*code couleur : */
+.carre{
+    width:110px; 
+    height:20px;  
+    text-decoration:none; 
+    color:white;
+    text-align:center; 
+    font-weight:bold; 
+    background-color:#000080;
+    padding:5px
+}
+  
