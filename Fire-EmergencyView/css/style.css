@@ -63,12 +63,15 @@ tbody>tr{
 .Pris_en_charge{
     background-color: lightblue;
 }
+
 .Until_located{
     background-color: lightpink;
 }
+
 .Non_pris_en_charge{
-    background-color: lightgreen;
+    background-color: lightcoral;
 }
+
 .Eteint{
     background-color: lightgrey;
 }
@@ -143,15 +146,5 @@ tbody>tr{
 
 
 
-  /*code couleur : */
-.carre{
-    width:110px; 
-    height:20px;  
-    text-decoration:none; 
-    color:white;
-    text-align:center; 
-    font-weight:bold; 
-    background-color:#000080;
-    padding:5px
-}
+
   
